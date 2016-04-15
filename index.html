@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars</title>
+  <style>
+    body {
+      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/starfield_stock_1.jpg);
+      background-size: contain;
+      margin: 50px;
+      position: relative;
+    }
+
+    .earth {
+      top: 0;
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background-image: url(earth.png);
+      background-size: contain;
+      right: calc(100% - 400px);
+      transition: all 5s;
+    }
+    .earth.compare { right: 0; width: 200px; height: 200px;}
+
+    .equal {  font-size: 250px; color: white; text-align: center; transition: opacity 500ms; }
+    .equal.hide { opacity: 0; }
+    .equal.text { font-size: 40px; padding-top: 75px; }
+    .mars {
+      top: 0;
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-image: url(mars.png);
+      background-size: contain;
+      right: 0;
+      transition: 300ms opacity;
+    }
+
+    .mars:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+<div class="earth"></div>
+<div class="equal">=</div>
+<div class="mars"></div>
+<script>
+  document.querySelector('.equal').addEventListener('click', e => {
+    console.log(e)
+    const equal = document.querySelector('.equal')
+    const earth = document.querySelector('.earth')
+    earth.className += ' compare'
+    equal.className += ' hide'
+    setTimeout(()=>{
+      equal.className = 'equal text'
+      equal.innerText = 'Mars radius is 0.53 of Earth size'
+    }, 5000)
+  })
+</script>
+</body>
+</html>
