@@ -1,41 +1,61 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Mars-stats by theghostbel</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars</title>
+  <style>
+    body {
+      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/starfield_stock_1.jpg);
+      background-size: contain;
+      margin: 50px;
+      position: relative;
+    }
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Mars-stats</h1>
-        <p></p>
+    .earth {
+      top: 0;
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background-image: url(earth.png);
+      background-size: contain;
+      right: calc(100% - 400px);
+      transition: all 5s;
+    }
+    .earth.compare { right: 0; width: 200px; height: 200px;}
 
-        <p class="view"><a href="https://github.com/theghostbel/mars-stats">View the Project on GitHub <small>theghostbel/mars-stats</small></a></p>
+    .equal {  font-size: 250px; color: white; text-align: center; transition: opacity 500ms; }
+    .equal.hide { opacity: 0; }
+    .equal.text { font-size: 40px; padding-top: 75px; }
+    .mars {
+      top: 0;
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-image: url(mars.png);
+      background-size: contain;
+      right: 0;
+      transition: 300ms opacity;
+    }
 
-
-        <ul>
-          <li><a href="https://github.com/theghostbel/mars-stats/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/theghostbel/mars-stats/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/theghostbel/mars-stats">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p>Just test</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/theghostbel">theghostbel</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+    .mars:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+<div class="earth"></div>
+<div class="equal">=</div>
+<div class="mars"></div>
+<script>
+  document.querySelector('.equal').addEventListener('click', e => {
+    console.log(e)
+    const equal = document.querySelector('.equal')
+    const earth = document.querySelector('.earth')
+    earth.className += ' compare'
+    equal.className += ' hide'
+    setTimeout(()=>{
+      equal.className = 'equal text'
+      equal.innerText = 'Mars radius is 0.53 of Earth size'
+    }, 5000)
+  })
+</script>
+</body>
 </html>
