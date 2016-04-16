@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars</title>
+  <style>
+    html { height: 100%; }
+    body {
+      height: 95%;
+      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/starfield_stock_1.jpg);
+      background-size: contain;
+    }
+
+    .mars {
+      background-image: url(mars.png);
+      background-size: contain;
+    }
+
+    .earth {
+      background-image: url(earth.png);
+      background-size: contain;
+    }
+
+    .step1 { margin: 50px; position: relative; transition: transform 2s, opacity 1s; }
+    .step1.move-up { transform: translateY(-200%); opacity: 0.2 }
+
+    .step1 .earth {
+      top: 0;
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: calc(100% - 400px);
+      transition: all 5s;
+    }
+
+    .step1 .earth.compare { right: 0; width: 200px; height: 200px; }
+
+    .equal { font-size: 250px; color: white; text-align: center; transition: opacity 500ms; }
+
+    .equal.hide { opacity: 0; }
+
+    .equal.text { font-size: 40px; padding-top: 75px; }
+
+    .step1 .mars {
+      top: 0;
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      right: 0;
+      transition: 300ms opacity;
+    }
+
+    .mars:hover { opacity: 0.8; }
+
+    .step2go { cursor: pointer; }
+
+    .step2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .step2 .mars {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 200px 200px;
+      transition: all 5s;
+    }
+    .step2.ready .mars {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .step2 .mars svg text { visibility: hidden; }
+    .step2 .mars:hover svg text { visibility: visible; }
+  </style>
+</head>
+<body>
+<div class="step1">
+  <div class="earth"></div>
+  <div class="equal">=</div>
+  <div class="mars"></div>
+  <script>
+    document.querySelector('.equal').addEventListener('click', function(e) {
+      const equal = document.querySelector('.equal')
+      const earth = document.querySelector('.earth')
+      earth.className += ' compare'
+      equal.className += ' hide'
+      setTimeout(function() {
+        equal.className = 'equal text'
+        equal.innerHTML = 'Mars radius is 0.53 of Earth size<br><span class="step2go">Zoom it 🔎</span>'
+      }, 5000)
+    })
+  </script>
+</div>
+<div class="step2 ">
+  <script>
+    document.addEventListener('click', function(e){
+      if (e.target.className !== 'step2go') return
+
+      const step1 = document.querySelector('.step1')
+      const step2 = document.querySelector('.step2')
+      step1.className = 'step1 move-up'
+      step1.addEventListener('transitionend', function(){
+        step1.parentNode.removeChild(step1)
+        step2.className = 'step2 ready'
+      })
+    })
+  </script>
+  <div class="mars">
+    <svg width="800" height="800"  viewBox="0 0 800 800"
+         xmlns="http://www.w3.org/2000/svg" version="1.1"
+         xmlns:xlink="http://www.w3.org/1999/xlink" >
+
+      <path id="orbitPhobos" d="M130,400a270,280 0 1,0 540,0a270,280 0 1,0 -540,0" style="stroke-width: 3px; stroke:#660000; fill:none;"/>
+
+      <text x="20" y="20"
+            style="font-family: Times New Roman;
+               font-size: 24px;
+               stroke: #f1f6ff;
+               fill: #0000ff;">
+        Phobos, Radius - 11,1 km
+        <animateMotion begin="0s" dur="10s" repeatCount="indefinite" >
+          <mpath xlink:href="#orbitPhobos"/>
+        </animateMotion>
+      </text>
+
+      <image x="0" y="0" width="30" height="30" xlink:href="phobos.png">
+        <animateMotion begin="0s" dur="10s" repeatCount="indefinite" >
+          <mpath xlink:href="#orbitPhobos"/>
+        </animateMotion>
+      </image>
+
+    </svg>
+  </div>
+
+</div>
+
+</body>
+</html>
